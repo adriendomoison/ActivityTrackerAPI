@@ -6,7 +6,6 @@
 # Folders
 _obj
 _test
-.idea
 
 # Architecture specific extensions/prefixes
 *.[568vq]
@@ -20,9 +19,11 @@ _cgo_export.*
 
 _testmain.go
 
-ActivityTrackerAPI.iml
-
 *.exe
 *.test
 *.prof
-
+*.test
+*.out
+*.txt
+cover.html
+README.html
