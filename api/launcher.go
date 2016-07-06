@@ -15,9 +15,9 @@ func InitApi() {
 
 	if port == "" {
 		log.Println("Local deployement, use port 5000")
-		port = 5000
+		port = "5000"
 	} else {
-		log.Println("Heroku deployement, use port " + strconv.Itoa(port))
+		log.Println("Heroku deployement, use port " + port)
 	}
 
 	app = gin.Default()
