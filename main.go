@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"./repository"
-	"./api"
+	"github.com/adriendomoison/ActivityTrackerAPI/repository"
+	"github.com/adriendomoison/ActivityTrackerAPI/api"
 )
 
 func main() {
