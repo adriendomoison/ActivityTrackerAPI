@@ -3,7 +3,6 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 	"os"
 	"log"
 )
@@ -21,9 +20,125 @@ func InitApi() {
 	}
 
 	app = gin.Default()
-	app.GET("/api/user/:id", func (c *gin.Context) {
-		id, _ := strconv.Atoi(c.Params.ByName("id"))
-		c.JSON(http.StatusOK, gin.H{"id": id, "working": true})
-	})
+	
+	initRouts()
+
 	app.Run(":" + port)
+}
+
+func initRouts() {
+	app.POST("/api/users", notImplemented)
+	app.DELETE("/api/users/:userId", notImplemented)
+	app.POST("/api/users/:userId/messages", notImplemented)
+	app.POST("/api/events", notImplemented)
+	app.GET("/api/events/:eventId", notImplemented)
+	app.PUT("/api/events/:eventId", notImplemented)
+	app.DELETE("/api/events/:eventId", notImplemented)
+	app.POST("/api/events/:eventId/subscribe", notImplemented)
+	app.DELETE("/api/events/:eventId/subscribe", notImplemented)
+	app.POST("/api/programs", notImplemented)
+	app.GET("/api/programs", notImplemented)
+	app.GET("/api/programs/:programId", notImplemented)
+	app.DELETE("/api/programs/:programId", notImplemented)
+	app.GET("/api/programs/:programId/info", notImplemented)
+	app.GET("/api/programs/:programId/events", notImplemented)
+	app.GET("/api/programs/:programId/enrolled-students", notImplemented)
+	app.GET("/api/programs/:programId/enrolled-students/:enrolled-studentsId/status", notImplemented)
+	app.GET("/api/justifications", notImplemented)
+	app.POST("/api/justifications", notImplemented)
+	app.GET("/api/justifications/:justificationId", notImplemented)
+	app.PUT("/api/justifications/:justificationId/validatation", notImplemented)
+	app.DELETE("/api/justifications/:justificationId/validatation", notImplemented)
+}
+
+func createUser(c *gin.Context) {
+	
+}
+
+func deleteUser(c *gin.Context) {
+	
+}
+
+func createMessage(c *gin.Context) {
+	
+}
+
+func createEvent(c *gin.Context) {
+	
+}
+
+func retrieveEvent(c *gin.Context) {
+	
+}
+
+func updateEvent(c *gin.Context) {
+	
+}
+
+func deleteEvent(c *gin.Context) {
+	
+}
+
+func subscribeEvent(c *gin.Context) {
+	
+}
+
+func unsubscribeEvent(c *gin.Context) {
+	
+}
+
+func createProgram(c *gin.Context) {
+	
+}
+
+func retrieveAllPrograms(c *gin.Context) {
+	
+}
+
+func retrieveProgram(c *gin.Context) {
+	
+}
+
+func deleteProgram(c *gin.Context) {
+	
+}
+
+func retrieveProgramInfo(c *gin.Context) {
+	
+}
+
+func retriveProgramsEvent(c *gin.Context) {
+	
+}
+
+func retrieveEnrolledStudents(c *gin.Context) {
+	
+}
+
+func retrieveStatusOfEnreolledStudent(c *gin.Context) {
+	
+}
+
+func retrieveJustifications(c *gin.Context) {
+	
+}
+
+func createJustification(c *gin.Context) {
+	
+}
+
+func retrieveJustification(c *gin.Context) {
+	
+}
+
+func acceptJustification(c *gin.Context) {
+	
+}
+
+func refuseJustification(c *gin.Context) {
+	
+}
+
+func notImplemented(c *gin.Context) {
+	c.Writer.WriteHeader(http.StatusNotImplemented)
 }
