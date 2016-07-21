@@ -10,7 +10,7 @@ import (
 
 var T i18n.TranslateFunc
 
-func SetLang() (returnMsg DTO.ReturnMsg) {
+func SetLang() (DTO.ReturnMsg) {
 	var err error
 	
 	T, err = i18n.Tfunc(os.Getenv("LANG"))

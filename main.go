@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	i18n.MustLoadTranslationFile("translation/en-us.all.json")
-	i18n.MustLoadTranslationFile("translation/fr-fr.all.json")
+	i18n.MustLoadTranslationFile("github.com/adriendomoison/ActivityTrackerAPI/translation/en-us.all.json")
+	i18n.MustLoadTranslationFile("github.com/adriendomoison/ActivityTrackerAPI/translation/fr-fr.all.json")
 	translate.SetLang()
 	repository.InitDBConnection()
 	api.InitApi()
