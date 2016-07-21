@@ -13,8 +13,7 @@ var T i18n.TranslateFunc
 func SetLang() (DTO.ReturnMsg) {
 	var err error
 	
-	fmt.Println("LANG: " + os.Getenv("LANG"))
-	T, err = i18n.Tfunc("en-us")
+	T, err = i18n.Tfunc(os.Getenv("LANG"))
 	if err != nil {
 		log.Println(err)
 		return DTO.ReturnMsg{-1, T("errorLanguage")}
