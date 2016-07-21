@@ -35,6 +35,26 @@
 			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
 		},
 		{
+          "ImportPath": "github.com/nicksnyder/go-i18n/i18n",
+          "Comment": "v1.4.0",
+          "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+        },
+      {
+        "ImportPath": "github.com/nicksnyder/go-i18n/i18n/bundle",
+        "Comment": "v1.4.0",
+        "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+      },
+      {
+        "ImportPath": "github.com/nicksnyder/go-i18n/i18n/language",
+        "Comment": "v1.4.0",
+        "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+      },
+      {
+        "ImportPath": "github.com/nicksnyder/go-i18n/i18n/translation",
+        "Comment": "v1.4.0",
+        "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+      },
+      {
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "b400c2eff1badec7022a8c8f5bea058b6315eed7"
 		},
