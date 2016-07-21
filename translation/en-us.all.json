@@ -1,0 +1,46 @@
+[
+  {
+    "id": "errorDatabase",
+    "translation": "Error while contacting the database"
+  },
+  {
+    "id": "errorLanguage",
+    "translation": "Error while loading language package"
+  },
+  {
+    "id": "fieldNameMissing",
+    "translation": "The field 'name' is missing"
+  },
+  {
+    "id": "fieldNbrOfHoursToCompleteMissing",
+    "translation": "Field 'number of hours to complete the program' missing."
+  },
+  {
+    "id": "greetingNewLanguage",
+    "translation": "Hello World. The language has been set to english"
+  },
+  {
+    "id": "name",
+    "translation": "name"
+  },
+  {
+    "id": "noEntryCreated",
+    "translation": "[CRITICAL] No entry created, please contact the support"
+  },
+  {
+    "id": "alreadyExist",
+    "translation": "Can't create this, some field need to be unique but already exist"
+  },
+  {
+    "id": "programCreated",
+    "translation": "Program successfully created"
+  },
+  {
+    "id": "programDelete",
+    "translation": "The program has been successfully deleted."
+  },
+  {
+    "id": "sqlErDupEntry",
+    "translation": "'{{.Value}}' already exist, please find a different {{.Field}}."
+  }
+]

@@ -1,0 +1,2 @@
+goi18n -outdir translation/ translation/*.all.json translation/*.untranslated.json
+rm -f translation/*.untranslated.json

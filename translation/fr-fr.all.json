@@ -1,0 +1,42 @@
+[
+  {
+    "id": "errorDatabase",
+    "translation": "Erreur lors du contact avec la base de donnée"
+  },
+  {
+    "id": "errorLanguage",
+    "translation": "Erreur lors du chargement des packets de langue"
+  },
+  {
+    "id": "fieldNameMissing",
+    "translation": "Le champs 'nom' est requis."
+  },
+  {
+    "id": "fieldNbrOfHoursToCompleteMissing",
+    "translation": "Le champs 'nombre d'heure pour completer le programme' est requis."
+  },
+  {
+    "id": "greetingNewLanguage",
+    "translation": "Bonjour le monde. La langue à été définie à Français"
+  },
+  {
+    "id": "name",
+    "translation": "nom"
+  },
+  {
+    "id": "noEntryCreated",
+    "translation": "[CRITICAL] Ceci n'a pas pu être créer, s'il vous plait contacter le support"
+  },
+  {
+    "id": "programCreated",
+    "translation": "Le programme a été créer avec succès."
+  },
+  {
+    "id": "programDelete",
+    "translation": "Le program a été supprimé avec succeès."
+  },
+  {
+    "id": "sqlErDupEntry",
+    "translation": "'{{.Value}}' existe déjà, choissiez un {{.Field}} different."
+  }
+]
