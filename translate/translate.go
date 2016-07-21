@@ -5,15 +5,14 @@ import (
 	"github.com/adriendomoison/ActivityTrackerAPI/DTO"
 	"log"
 	"fmt"
-	"os"
 )
 
 var T i18n.TranslateFunc
 
 func SetLang() (DTO.ReturnMsg) {
 	var err error
-	
-	T, err = i18n.Tfunc(os.Getenv("LANG"))
+	//os.Getenv("LANG")
+	T, err = i18n.Tfunc("en-us")
 	if err != nil {
 		log.Println(err)
 		return DTO.ReturnMsg{-1, T("errorLanguage")}
