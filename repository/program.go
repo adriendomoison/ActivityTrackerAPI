@@ -6,11 +6,12 @@ import (
 	"github.com/adriendomoison/ActivityTrackerAPI/DTO"
 	"github.com/adriendomoison/ActivityTrackerAPI/translate"
 	"github.com/go-sql-driver/mysql"
+	"github.com/kisielk/sqlstruct"
+	"fmt"
 )
 
-func CreateProgram(p DAO.Program) (DTO.ReturnMsg) {
-	var err error
-	res, err := db.Exec("INSERT INTO program (name, nbr_event, nbr_student, nbr_hours_available_per_student, " +
+func CreateProgram(p DAO.ProgramCreation) DTO.ReturnMsg {
+	res, err := db.Exec("INSERT INTO program (name, nbr_event, nbr_student, nbr_hours_available, " +
 		"nbr_student_danger, fk_creator, nbr_hours_to_complete) " +
 		"VALUES (?, ?, ?, ?, ?, ?, ?)", p.Name, 0, 0, 0, 0, 0, p.NbrOfHoursToComplete)
 	if err != nil {
@@ -30,4 +31,64 @@ func CreateProgram(p DAO.Program) (DTO.ReturnMsg) {
 		return DTO.ReturnMsg{0, translate.T("programCreated")}
 	}
 	return DTO.ReturnMsg{1, translate.T("noEntryCreated")}
+}
+
+func RetrieveProgramOld() (programs []DAO.Program, r DTO.ReturnMsg, enrolledStudents []DAO.StudentBasic) {
+	res, err := db.Prepare(fmt.Sprintf("SELECT %s FROM program && ", sqlstruct.Columns(DAO.Program{})))
+	if err != nil {
+		log.Println(err)
+	}
+	rows, err := res.Query();
+	if err != nil {
+		log.Println(err)
+	}
+	defer rows.Close()
+	var p DAO.Program
+	for i := 0; rows.Next(); i++ {
+		err = sqlstruct.Scan(&p, rows)
+		if err != nil {
+			log.Println(err)
+		}
+		programs = append(programs, p)
+	}
+	return
+}
+
+func RetrieveProgram() (map[string]DAO.Program, DTO.ReturnMsg) {
+	
+	var programs = make(map[string]DAO.Program)
+	
+	sql := "SELECT %s, %s FROM program AS p " +
+		"INNER JOIN program_subscription AS ps ON p.idprogram = ps.fk_program " +
+		"INNER JOIN user AS s ON s.iduser = ps.fk_user"
+	sql = fmt.Sprintf(sql, sqlstruct.ColumnsAliased(DAO.Program{}, "p"), sqlstruct.ColumnsAliased(DAO.StudentBasic{}, "s"))
+	rows, err := db.Query(sql)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for i := 0; rows.Next(); i++ {
+		var program DAO.Program
+		var student DAO.StudentBasic
+		
+		err = sqlstruct.ScanAliased(&program, rows, "p")
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = sqlstruct.ScanAliased(&student, rows, "s")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if _, ok := programs[program.Name]; !ok {
+			programs[program.Name] = program
+		}
+		appendStudentToProgram(programs, program.Name, student)
+	}
+	return programs, DTO.ReturnMsg{}
+}
+
+func appendStudentToProgram(p map[string]DAO.Program, n string, s DAO.StudentBasic) {
+	tmp := p[n]
+	tmp.Enrolled_student = append(p[n].Enrolled_student, s)
+	p[n] = tmp
 }

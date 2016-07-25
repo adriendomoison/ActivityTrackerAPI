@@ -41,7 +41,7 @@ func initRouts() {
 	app.POST("/api/events/:eventId/subscribe", notImplemented)
 	app.DELETE("/api/events/:eventId/subscribe", notImplemented)
 	app.POST("/api/programs", createProgram)
-	app.GET("/api/programs", notImplemented)
+	app.GET("/api/programs", retrieveAllPrograms)
 	app.GET("/api/programs/:programId", notImplemented)
 	app.DELETE("/api/programs/:programId", notImplemented)
 	app.GET("/api/programs/:programId/info", notImplemented)
@@ -94,7 +94,7 @@ func unsubscribeEvent(c *gin.Context) {
 }
 
 func createProgram(c *gin.Context) {
-	program := &DTO.Program{}
+	program := &DTO.ProgramCreation{}
 	if err := c.BindJSON(program); err != nil {
 		log.Println(err.Error())
 	}
@@ -114,7 +114,8 @@ func createProgram(c *gin.Context) {
 }
 
 func retrieveAllPrograms(c *gin.Context) {
-	
+	programs, _ := service.RetrieveAllPrograms()
+	c.JSON(http.StatusOK, programs)
 }
 
 func retrieveProgram(c *gin.Context) {

@@ -31,6 +31,10 @@
       "Rev": "3852dcfda249c2097355a6aabb199a28d97b30df"
     },
     {
+      "ImportPath": "github.com/kisielk/sqlstruct",
+      "Rev": "648daed35d49dac24a4bff253b190a80da3ab6a5"
+    },
+    {
       "ImportPath": "github.com/manucorporat/sse",
       "Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
     },
