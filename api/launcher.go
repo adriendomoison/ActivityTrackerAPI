@@ -109,12 +109,14 @@ func createProgram(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, userMsg)
 	} else {
 		defineUserMessage(service.CreateProgram(program), &userMsg)
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.JSON(http.StatusCreated, userMsg)
 	}
 }
 
 func retrieveAllPrograms(c *gin.Context) {
 	programs, _ := service.RetrieveAllPrograms()
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.JSON(http.StatusOK, programs)
 }
 
