@@ -55,7 +55,6 @@ func RetrieveProgram() (map[string]DAO.Program, DTO.ReturnMsg) {
 			log.Fatal(err)
 		}
 		err = sqlstruct.ScanAliased(&student, rows, "s")
-		// TODO; fix error with Timestamp
 		if err != nil {
 			log.Println(err)
 		}
