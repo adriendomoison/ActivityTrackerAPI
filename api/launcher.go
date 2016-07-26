@@ -94,6 +94,7 @@ func unsubscribeEvent(c *gin.Context) {
 }
 
 func createProgram(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	program := &DTO.ProgramCreation{}
 	if err := c.BindJSON(program); err != nil {
 		log.Println(err.Error())
@@ -109,14 +110,13 @@ func createProgram(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, userMsg)
 	} else {
 		defineUserMessage(service.CreateProgram(program), &userMsg)
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.JSON(http.StatusCreated, userMsg)
 	}
 }
 
 func retrieveAllPrograms(c *gin.Context) {
-	programs, _ := service.RetrieveAllPrograms()
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	programs, _ := service.RetrieveAllPrograms()
 	c.JSON(http.StatusOK, programs)
 }
 

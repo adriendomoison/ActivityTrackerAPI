@@ -33,27 +33,6 @@ func CreateProgram(p DAO.ProgramCreation) DTO.ReturnMsg {
 	return DTO.ReturnMsg{1, translate.T("noEntryCreated")}
 }
 
-func RetrieveProgramOld() (programs []DAO.Program, r DTO.ReturnMsg, enrolledStudents []DAO.StudentBasic) {
-	res, err := db.Prepare(fmt.Sprintf("SELECT %s FROM program && ", sqlstruct.Columns(DAO.Program{})))
-	if err != nil {
-		log.Println(err)
-	}
-	rows, err := res.Query();
-	if err != nil {
-		log.Println(err)
-	}
-	defer rows.Close()
-	var p DAO.Program
-	for i := 0; rows.Next(); i++ {
-		err = sqlstruct.Scan(&p, rows)
-		if err != nil {
-			log.Println(err)
-		}
-		programs = append(programs, p)
-	}
-	return
-}
-
 func RetrieveProgram() (map[string]DAO.Program, DTO.ReturnMsg) {
 	
 	var programs = make(map[string]DAO.Program)
@@ -76,8 +55,9 @@ func RetrieveProgram() (map[string]DAO.Program, DTO.ReturnMsg) {
 			log.Fatal(err)
 		}
 		err = sqlstruct.ScanAliased(&student, rows, "s")
+		// TODO; fix error with Timestamp
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 		if _, ok := programs[program.Name]; !ok {
 			programs[program.Name] = program
