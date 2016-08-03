@@ -12,8 +12,24 @@
     "translation": "The field 'name' is missing"
   },
   {
+    "id": "fieldDescriptionMissing",
+    "translation": "The field 'Description' is missing"
+  },
+  {
+    "id": "fieldStartDateMissing",
+    "translation": "The field 'Start Date' is missing"
+  },
+  {
+    "id": "fieldEndDateMissing",
+    "translation": "The field 'End Date' is missing"
+  },
+  {
     "id": "fieldNbrOfHoursToCompleteMissing",
     "translation": "Field 'number of hours to complete the program' missing."
+  },
+  {
+    "id": "programCreationUsage",
+    "translation": "{\n\tname: string\n\tdescription: string\n\tstartDate: string\n\tendDate: string\n\tenrolledStudent: [int]\n\tnbrOfHoursToComplete: int\n}"
   },
   {
     "id": "greetingNewLanguage",
@@ -42,5 +58,21 @@
   {
     "id": "sqlErDupEntry",
     "translation": "'{{.Value}}' already exist, please find a different {{.Field}}."
+  },
+  {
+    "id": "noProgram",
+    "translation": "There are no program created yet."
+  },
+  {
+    "id": "noProgramFor",
+    "translation": "No program for {{.Field}} {{.Value}}"
+  },
+  {
+    "id": "programSuccessfullyDeleted",
+    "translation": "The program has been successfully deleted"
+  },
+  {
+    "id": "noStudent",
+    "translation": "There are no student enrolled for this program yet."
   }
 ]

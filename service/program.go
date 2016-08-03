@@ -9,11 +9,14 @@ import (
 	"log"
 )
 
-func CreateProgram(program *DTO.ProgramCreation) DTO.ReturnMsg {
-	p := DAO.ProgramCreation{}
+func CreateProgram(program *DTO.Program) DTO.ReturnMsg {
+	p := DAO.Program{}
 	p.Name = program.Name
-	p.EnrolledStudents = program.EnrolledStudents
-	p.NbrOfHoursToComplete = program.NbrOfHoursToComplete
+	p.Description = program.Description
+	p.Start_date = program.StartDate
+	p.End_date = program.EndDate
+	p.Enrolled_student = program.EnrolledStudents
+	p.Nbr_hours_to_complete = program.NbrOfHoursToComplete
 	return repository.CreateProgram(p)
 }
 
@@ -21,7 +24,7 @@ func RetrieveAllPrograms() (programs []DTO.Program, rMsg DTO.ReturnMsg) {
 	var programsData map[string]DAO.Program
 	var keys []string
 	
-	programsData, rMsg = repository.RetrieveProgram()
+	programsData, rMsg = repository.RetrieveAllPrograms()
 	for k := range programsData {
 		keys = append(keys, k)
 	}
@@ -35,13 +38,28 @@ func RetrieveAllPrograms() (programs []DTO.Program, rMsg DTO.ReturnMsg) {
 	return
 }
 
+func RetrieveProgram(id int) (DTO.Program, DTO.ReturnMsg) {
+	
+	programData, rMsg := repository.RetrieveProgram(id)
+	
+	startDate, endDate := findDate(programData)
+	program := DTO.Program{programData.Id, programData.Name, programData.Description,
+		time.Time(startDate).Format("2006-01-02"), time.Time(endDate).Format("2006-01-02"),
+		programData.Nbr_hours_to_complete, programData.Enrolled_student}
+	return program, rMsg
+}
+
+func DeleteProgram(id int) DTO.ReturnMsg {
+	return repository.DeleteProgram(id)
+}
+
 func findDate(programData DAO.Program) (timeStart time.Time, timeEnd time.Time) {
 	var err error
 	
-	if timeStart, err = time.Parse("2006-01-02 15:04:05", programData.Start_Date); err != nil {
+	if timeStart, err = time.Parse("2006-01-02 15:04:05", programData.Start_date); err != nil {
 		log.Println(err)
 	}
-	if timeEnd, err = time.Parse("2006-01-02 15:04:05", programData.End_Date); err != nil {
+	if timeEnd, err = time.Parse("2006-01-02 15:04:05", programData.End_date); err != nil {
 		log.Println(err)
 	}
 	return

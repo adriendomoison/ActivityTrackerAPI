@@ -9,6 +9,7 @@ import (
 	"github.com/adriendomoison/ActivityTrackerAPI/service"
 	"github.com/adriendomoison/ActivityTrackerAPI/translate"
 	"github.com/nicksnyder/go-i18n/i18n"
+	"strconv"
 )
 
 var app *gin.Engine
@@ -42,8 +43,8 @@ func initRouts() {
 	app.DELETE("/api/events/:eventId/subscribe", notImplemented)
 	app.POST("/api/programs", createProgram)
 	app.GET("/api/programs", retrieveAllPrograms)
-	app.GET("/api/programs/:programId", notImplemented)
-	app.DELETE("/api/programs/:programId", notImplemented)
+	app.GET("/api/programs/:programId", retrieveProgram)
+	app.DELETE("/api/programs/:programId", deleteProgram)
 	app.GET("/api/programs/:programId/info", notImplemented)
 	app.GET("/api/programs/:programId/events", notImplemented)
 	app.GET("/api/programs/:programId/enrolled-students", notImplemented)
@@ -93,20 +94,40 @@ func unsubscribeEvent(c *gin.Context) {
 	
 }
 
+func addErrorMessage(errorMessage *string, newMessage string) {
+	if *errorMessage != "" {
+		*errorMessage += "<br />"
+	}
+	*errorMessage += newMessage
+}
+
 func createProgram(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-	program := &DTO.ProgramCreation{}
+	program := &DTO.Program{}
 	if err := c.BindJSON(program); err != nil {
 		log.Println(err.Error())
 	}
 	log.Println(program)
 	userMsg := DTO.UserMsg{}
 	
-	if program.Name == "" {
-		userMsg.Error = translate.T("fieldNameMissing")
-		c.JSON(http.StatusBadRequest, userMsg)
-	} else if program.NbrOfHoursToComplete == 0 {
-		userMsg.Error = translate.T("fieldNbrOfHoursToCompleteMissing")
+	if program.Name == "" || program.Description == "" || program.StartDate == "" ||
+		program.EndDate == "" || program.NbrOfHoursToComplete == 0 {
+		if program.Name == "" {
+			addErrorMessage(&userMsg.Error, translate.T("fieldNameMissing"))
+		}
+		if program.Description == "" {
+			addErrorMessage(&userMsg.Error, translate.T("fieldDescriptionMissing"))
+		}
+		if program.StartDate == "" {
+			addErrorMessage(&userMsg.Error, translate.T("fieldStartDateMissing"))
+		}
+		if program.EndDate == "" {
+			addErrorMessage(&userMsg.Error, translate.T("fieldEndDateMissing"))
+		}
+		if program.NbrOfHoursToComplete == 0 {
+			addErrorMessage(&userMsg.Error, translate.T("fieldNbrOfHoursToCompleteMissing"))
+		}
+		userMsg.Information = translate.T("programCreationUsage")
 		c.JSON(http.StatusBadRequest, userMsg)
 	} else {
 		defineUserMessage(service.CreateProgram(program), &userMsg)
@@ -121,11 +142,34 @@ func retrieveAllPrograms(c *gin.Context) {
 }
 
 func retrieveProgram(c *gin.Context) {
-	
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	id, err := strconv.Atoi(c.Params.ByName("programId"))
+	if err != nil {
+		log.Println(err)
+	}
+	program, rMsg := service.RetrieveProgram(id)
+	if (rMsg.Status == 0) {
+		c.JSON(http.StatusOK, program)
+	} else if rMsg.Status == 1 {
+		c.JSON(http.StatusBadRequest, DTO.UserMsg{Error:rMsg.Msg})
+	} else if rMsg.Status == -1 {
+		c.JSON(http.StatusInternalServerError, DTO.UserMsg{Error:rMsg.Msg})
+	}
 }
 
 func deleteProgram(c *gin.Context) {
-	
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	id, err := strconv.Atoi(c.Params.ByName("programId"))
+	if err != nil {
+		log.Println(err)
+	}
+	if rMsg := service.DeleteProgram(id); rMsg.Status == 0 {
+		c.JSON(http.StatusOK, DTO.UserMsg{Information:rMsg.Msg})
+	} else if rMsg.Status == 1 {
+		c.JSON(http.StatusBadRequest, DTO.UserMsg{Error:rMsg.Msg})
+	} else if rMsg.Status == -1 {
+		c.JSON(http.StatusInternalServerError, DTO.UserMsg{Error:rMsg.Msg})
+	}
 }
 
 func retrieveProgramInfo(c *gin.Context) {

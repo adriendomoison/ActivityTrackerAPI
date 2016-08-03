@@ -4,12 +4,6 @@ import (
 	"github.com/adriendomoison/ActivityTrackerAPI/DAO"
 )
 
-type ProgramCreation struct {
-	Name                 string `json:"name"`
-	EnrolledStudents     []int  `json:"entrolledStudents"`
-	NbrOfHoursToComplete int    `json:"nbrOfHoursToComplete"`
-}
-
 type Program struct {
 	Id                   int    `json:"id"`
 	Name                 string `json:"name"`
