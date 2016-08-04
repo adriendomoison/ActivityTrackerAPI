@@ -29,7 +29,7 @@
   },
   {
     "id": "programCreationUsage",
-    "translation": "{\n\tname: string\n\tdescription: string\n\tstartDate: string\n\tendDate: string\n\tenrolledStudent: [int]\n\tnbrOfHoursToComplete: int\n}"
+    "translation": "{name: string, description: string, startDate: string, endDate: string, enrolledStudent: [int], nbrOfHoursToComplete: int}"
   },
   {
     "id": "greetingNewLanguage",
@@ -44,8 +44,8 @@
     "translation": "[CRITICAL] No entry created, please contact the support"
   },
   {
-    "id": "alreadyExist",
-    "translation": "Can't create this, some field need to be unique but already exist"
+    "id": "programAlreadyExist",
+    "translation": "This program already exist, please use a different name"
   },
   {
     "id": "programCreated",

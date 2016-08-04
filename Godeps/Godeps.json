@@ -31,12 +31,31 @@
       "Rev": "3852dcfda249c2097355a6aabb199a28d97b30df"
     },
     {
+      "ImportPath": "github.com/jinzhu/gorm",
+      "Comment": "v1.0-50-ga646b13",
+      "Rev": "a646b13548ec0aa812fe805b2780f460dd2771b6"
+    },
+    {
+      "ImportPath": "github.com/jinzhu/gorm/dialects/sqlite",
+      "Comment": "v1.0-50-ga646b13",
+      "Rev": "a646b13548ec0aa812fe805b2780f460dd2771b6"
+    },
+    {
+      "ImportPath": "github.com/jinzhu/inflection",
+      "Rev": "8f4d3a0d04ce0b7c0cf3126fb98524246d00d102"
+    },
+    {
       "ImportPath": "github.com/kisielk/sqlstruct",
       "Rev": "648daed35d49dac24a4bff253b190a80da3ab6a5"
     },
     {
       "ImportPath": "github.com/manucorporat/sse",
       "Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+    },
+    {
+      "ImportPath": "github.com/mattn/go-sqlite3",
+      "Comment": "v1.1.0-71-ge118d44",
+      "Rev": "e118d4451349065b8e7ce0f0af32e033995363f8"
     },
     {
       "ImportPath": "github.com/nicksnyder/go-i18n/i18n",

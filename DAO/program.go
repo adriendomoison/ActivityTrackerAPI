@@ -1,11 +1,14 @@
 package DAO
 
+import (
+	"time"
+)
+
 type Program struct {
-	Id                    int    `sql:"idprogram"`
-	Name                  string `sql:"name"`
-	Description           string `sql:"description"`
-	Start_date            string `sql:"start_date"`
-	End_date              string `sql:"end_date"`
-	Nbr_hours_to_complete int    `sql:"nbr_hours_to_complete"`
-	Enrolled_student      []StudentBasic  `sql:"-"`
+	Name               string `gorm:"column:name"`
+	Description        string `gorm:"column:description"`
+	StartDate          string `gorm:"column:start_date"`
+	EndDate            string `gorm:"column:end_date"`
+	NbrHoursToComplete int    `gorm:"column:nbr_hours_to_complete"`
+	CreatedAt          time.Time `gorm:"column:created_date"`
 }

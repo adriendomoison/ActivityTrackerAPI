@@ -2,35 +2,35 @@ package translate
 
 import (
 	"github.com/nicksnyder/go-i18n/i18n"
-	"github.com/adriendomoison/ActivityTrackerAPI/DTO"
 	"log"
 	"fmt"
 	"os"
+	"github.com/adriendomoison/ActivityTrackerAPI/utils"
 )
 
 var T i18n.TranslateFunc
 
-func SetLang() (DTO.ReturnMsg) {
+func SetLang() (utils.ReturnMsg) {
 	var err error
 	
 	T, err = i18n.Tfunc(os.Getenv("LANG"))
 	if err != nil {
 		log.Println(err)
-		return DTO.ReturnMsg{-1, T("errorLanguage")}
+		return utils.ReturnMsg{-1, T("errorLanguage")}
 	}
 	log.Println(T("greetingNewLanguage"))
-	return DTO.ReturnMsg{0, T("greetingNewLanguage")}
+	return utils.ReturnMsg{0, T("greetingNewLanguage")}
 }
 
-func ChangeLang(cookieLang string, acceptLang string) (DTO.ReturnMsg) {
+func ChangeLang(cookieLang string, acceptLang string) (utils.ReturnMsg) {
 	var err error
 	
 	defaultLang := "en-us"
 	T, err = i18n.Tfunc(cookieLang, acceptLang, defaultLang)
 	if err != nil {
 		log.Println(err)
-		return DTO.ReturnMsg{-1, T("errorLanguage")}
+		return utils.ReturnMsg{-1, T("errorLanguage")}
 	}
 	fmt.Println(T("greetingNewLanguage"))
-	return DTO.ReturnMsg{0, T("greetingNewLanguage")}
+	return utils.ReturnMsg{0, T("greetingNewLanguage")}
 }

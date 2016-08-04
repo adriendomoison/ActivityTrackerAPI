@@ -10,6 +10,7 @@ import (
 	"github.com/adriendomoison/ActivityTrackerAPI/translate"
 	"github.com/nicksnyder/go-i18n/i18n"
 	"strconv"
+	"github.com/adriendomoison/ActivityTrackerAPI/utils"
 )
 
 var app *gin.Engine
@@ -35,7 +36,7 @@ func initRouts() {
 	app.POST("/api/users", notImplemented)
 	app.DELETE("/api/users/:userId", notImplemented)
 	app.POST("/api/users/:userId/messages", notImplemented)
-	app.POST("/api/events", notImplemented)
+	app.POST("/api/events", createEvent)
 	app.GET("/api/events/:eventId", notImplemented)
 	app.PUT("/api/events/:eventId", notImplemented)
 	app.DELETE("/api/events/:eventId", notImplemented)
@@ -71,7 +72,13 @@ func createMessage(c *gin.Context) {
 }
 
 func createEvent(c *gin.Context) {
-	
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	event := &DTO.Event{}
+	if err := c.BindJSON(event); err != nil {
+		log.Println(err.Error())
+	}
+	log.Println(event)
+	c.JSON(http.StatusOK, event)
 }
 
 func retrieveEvent(c *gin.Context) {
@@ -94,44 +101,16 @@ func unsubscribeEvent(c *gin.Context) {
 	
 }
 
-func addErrorMessage(errorMessage *string, newMessage string) {
-	if *errorMessage != "" {
-		*errorMessage += "<br />"
-	}
-	*errorMessage += newMessage
-}
-
 func createProgram(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	program := &DTO.Program{}
 	if err := c.BindJSON(program); err != nil {
 		log.Println(err.Error())
 	}
-	log.Println(program)
-	userMsg := DTO.UserMsg{}
-	
-	if program.Name == "" || program.Description == "" || program.StartDate == "" ||
-		program.EndDate == "" || program.NbrOfHoursToComplete == 0 {
-		if program.Name == "" {
-			addErrorMessage(&userMsg.Error, translate.T("fieldNameMissing"))
-		}
-		if program.Description == "" {
-			addErrorMessage(&userMsg.Error, translate.T("fieldDescriptionMissing"))
-		}
-		if program.StartDate == "" {
-			addErrorMessage(&userMsg.Error, translate.T("fieldStartDateMissing"))
-		}
-		if program.EndDate == "" {
-			addErrorMessage(&userMsg.Error, translate.T("fieldEndDateMissing"))
-		}
-		if program.NbrOfHoursToComplete == 0 {
-			addErrorMessage(&userMsg.Error, translate.T("fieldNbrOfHoursToCompleteMissing"))
-		}
-		userMsg.Information = translate.T("programCreationUsage")
-		c.JSON(http.StatusBadRequest, userMsg)
+	if err := program.CheckField(); err != "" {
+		c.JSON(http.StatusBadRequest, DTO.UserMsg{Information: translate.T("programCreationUsage"), Error: err})
 	} else {
-		defineUserMessage(service.CreateProgram(program), &userMsg)
-		c.JSON(http.StatusCreated, userMsg)
+		c.JSON(defineUserMessage(service.CreateProgram(program)))
 	}
 }
 
@@ -225,10 +204,12 @@ func notImplemented(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNotImplemented)
 }
 
-func defineUserMessage(r DTO.ReturnMsg, userMsg *DTO.UserMsg) {
-	if r.Status == -1 || r.Status == 1 {
-		userMsg.Error = r.Msg
+func defineUserMessage(r utils.ReturnMsg) (int, DTO.UserMsg) {
+	if r.Status == 0 {
+		return http.StatusCreated, DTO.UserMsg{Information: r.Msg}
+	} else if r.Status == 1 {
+		return http.StatusBadRequest, DTO.UserMsg{Error: r.Msg}
 	} else {
-		userMsg.Information = r.Msg
+		return http.StatusInternalServerError, DTO.UserMsg{Error: r.Msg}
 	}
 }
