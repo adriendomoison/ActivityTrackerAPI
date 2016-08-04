@@ -8,12 +8,24 @@
     "translation": "Erreur lors du chargement des packets de langue"
   },
   {
+    "id": "fieldDescriptionMissing",
+    "translation": "Le champs 'Description' est requis"
+  },
+  {
+    "id": "fieldEndDateMissing",
+    "translation": "Le champs 'Date de fin' est requis"
+  },
+  {
     "id": "fieldNameMissing",
     "translation": "Le champs 'nom' est requis."
   },
   {
     "id": "fieldNbrOfHoursToCompleteMissing",
     "translation": "Le champs 'nombre d'heure pour completer le programme' est requis."
+  },
+  {
+    "id": "fieldStartDateMissing",
+    "translation": "Le champs 'Date de début' est requis"
   },
   {
     "id": "greetingNewLanguage",
@@ -28,12 +40,32 @@
     "translation": "[CRITICAL] Ceci n'a pas pu être créer, s'il vous plait contacter le support"
   },
   {
+    "id": "noProgram",
+    "translation": "Il n'y a aucun program crée pour le moment."
+  },
+  {
+    "id": "noProgramFor",
+    "translation": "Aucun program ayant pour {{.Field}} {{.Value}}"
+  },
+  {
+    "id": "noStudent",
+    "translation": "Il n'y a aucun étudiant inscrit à ce program."
+  },
+  {
+    "id": "programAlreadyExist",
+    "translation": "Un program possédant ce nom existe déjà"
+  },
+  {
     "id": "programCreated",
     "translation": "Le programme a été créer avec succès."
   },
   {
+    "id": "programCreationUsage",
+    "translation": "{name: string, description: string, startDate: string, endDate: string, enrolledStudent: [int], nbrOfHoursToComplete: int}"
+  },
+  {
     "id": "programDelete",
-    "translation": "Le program a été supprimé avec succeès."
+    "translation": "Le program a été supprimé."
   },
   {
     "id": "sqlErDupEntry",

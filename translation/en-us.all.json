@@ -8,28 +8,24 @@
     "translation": "Error while loading language package"
   },
   {
-    "id": "fieldNameMissing",
-    "translation": "The field 'name' is missing"
-  },
-  {
     "id": "fieldDescriptionMissing",
     "translation": "The field 'Description' is missing"
-  },
-  {
-    "id": "fieldStartDateMissing",
-    "translation": "The field 'Start Date' is missing"
   },
   {
     "id": "fieldEndDateMissing",
     "translation": "The field 'End Date' is missing"
   },
   {
+    "id": "fieldNameMissing",
+    "translation": "The field 'name' is missing"
+  },
+  {
     "id": "fieldNbrOfHoursToCompleteMissing",
     "translation": "Field 'number of hours to complete the program' missing."
   },
   {
-    "id": "programCreationUsage",
-    "translation": "{name: string, description: string, startDate: string, endDate: string, enrolledStudent: [int], nbrOfHoursToComplete: int}"
+    "id": "fieldStartDateMissing",
+    "translation": "The field 'Start Date' is missing"
   },
   {
     "id": "greetingNewLanguage",
@@ -44,22 +40,6 @@
     "translation": "[CRITICAL] No entry created, please contact the support"
   },
   {
-    "id": "programAlreadyExist",
-    "translation": "This program already exist, please use a different name"
-  },
-  {
-    "id": "programCreated",
-    "translation": "Program successfully created"
-  },
-  {
-    "id": "programDelete",
-    "translation": "The program has been successfully deleted."
-  },
-  {
-    "id": "sqlErDupEntry",
-    "translation": "'{{.Value}}' already exist, please find a different {{.Field}}."
-  },
-  {
     "id": "noProgram",
     "translation": "There are no program created yet."
   },
@@ -68,11 +48,27 @@
     "translation": "No program for {{.Field}} {{.Value}}"
   },
   {
-    "id": "programSuccessfullyDeleted",
-    "translation": "The program has been successfully deleted"
-  },
-  {
     "id": "noStudent",
     "translation": "There are no student enrolled for this program yet."
+  },
+  {
+    "id": "programAlreadyExist",
+    "translation": "This program already exist, please use a different name"
+  },
+  {
+    "id": "programCreated",
+    "translation": "Program successfully created"
+  },
+  {
+    "id": "programCreationUsage",
+    "translation": "{name: string, description: string, startDate: string, endDate: string, enrolledStudent: [int], nbrOfHoursToComplete: int}"
+  },
+  {
+    "id": "programDelete",
+    "translation": "The program has been successfully deleted."
+  },
+  {
+    "id": "sqlErDupEntry",
+    "translation": "'{{.Value}}' already exist, please find a different {{.Field}}."
   }
 ]
