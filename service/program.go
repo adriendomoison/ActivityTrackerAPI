@@ -5,16 +5,27 @@ import (
 	"github.com/adriendomoison/ActivityTrackerAPI/DTO"
 	"github.com/adriendomoison/ActivityTrackerAPI/DAO"
 	"github.com/adriendomoison/ActivityTrackerAPI/repository"
+	"time"
+	"log"
 )
+
+func changeStringToDate(s string) (date time.Time) {
+	date, err := time.Parse("02-01-2006", s)
+	if err != nil {
+		log.Println(err)
+	}
+	return
+}
 
 func CreateProgram(p *DTO.Program) utils.ReturnMsg {
 	return repository.CreateProgram(
 		DAO.Program{
 			Name:p.Name,
 			Description:p.Description,
-			StartDate:p.StartDate,
-			EndDate:p.EndDate,
+			StartDate:changeStringToDate(p.StartDate),
+			EndDate:changeStringToDate(p.EndDate),
 			NbrHoursToComplete:p.NbrOfHoursToComplete,
+			CreatedAt: time.Now(),
 		})
 }
 
@@ -33,8 +44,8 @@ func RetrieveAllPrograms() (programs []DTO.Program, rMsg utils.ReturnMsg) {
 			p[i].ID,
 			p[i].Name,
 			p[i].Description,
-			p[i].StartDate,
-			p[i].EndDate,
+			p[i].StartDate.Format("02-01-2006"),
+			p[i].EndDate.Format("02-01-2006"),
 			p[i].NbrHoursToComplete,
 			transformToArrayOfId(p[i].Users),
 		})
