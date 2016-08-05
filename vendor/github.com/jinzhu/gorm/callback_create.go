@@ -41,12 +41,12 @@ func updateTimeStampForCreateCallback(scope *Scope) {
 func createCallback(scope *Scope) {
 	if !scope.HasError() {
 		defer scope.trace(NowFunc())
-		
+
 		var (
 			columns, placeholders        []string
 			blankColumnsWithDefaultValue []string
 		)
-		
+
 		for _, field := range scope.Fields() {
 			if scope.changeableField(field) {
 				if field.IsNormal {
@@ -67,24 +67,24 @@ func createCallback(scope *Scope) {
 				}
 			}
 		}
-		
+
 		var (
 			returningColumn = "*"
 			quotedTableName = scope.QuotedTableName()
-			primaryField = scope.PrimaryField()
-			extraOption string
+			primaryField    = scope.PrimaryField()
+			extraOption     string
 		)
-		
+
 		if str, ok := scope.Get("gorm:insert_option"); ok {
 			extraOption = fmt.Sprint(str)
 		}
-		
+
 		if primaryField != nil {
 			returningColumn = scope.Quote(primaryField.DBName)
 		}
-		
+
 		lastInsertIDReturningSuffix := scope.Dialect().LastInsertIDReturningSuffix(quotedTableName, returningColumn)
-		
+
 		if len(columns) == 0 {
 			scope.Raw(fmt.Sprintf(
 				"INSERT INTO %v DEFAULT VALUES%v%v",
@@ -102,13 +102,13 @@ func createCallback(scope *Scope) {
 				addExtraSpaceIfExist(lastInsertIDReturningSuffix),
 			))
 		}
-		
+
 		// execute create sql
 		if lastInsertIDReturningSuffix == "" || primaryField == nil {
 			if result, err := scope.SQLDB().Exec(scope.SQL, scope.SQLVars...); scope.Err(err) == nil {
 				// set rows affected count
 				scope.db.RowsAffected, _ = result.RowsAffected()
-				
+
 				// set primary value to primary field
 				if primaryField != nil && primaryField.IsBlank {
 					if primaryValue, err := result.LastInsertId(); scope.Err(err) == nil {

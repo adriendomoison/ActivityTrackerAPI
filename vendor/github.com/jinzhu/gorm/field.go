@@ -19,16 +19,16 @@ func (field *Field) Set(value interface{}) (err error) {
 	if !field.Field.IsValid() {
 		return errors.New("field value not valid")
 	}
-	
+
 	if !field.Field.CanAddr() {
 		return ErrUnaddressable
 	}
-	
+
 	reflectValue, ok := value.(reflect.Value)
 	if !ok {
 		reflectValue = reflect.ValueOf(value)
 	}
-	
+
 	fieldValue := field.Field
 	if reflectValue.IsValid() {
 		if reflectValue.Type().ConvertibleTo(fieldValue.Type()) {
@@ -40,7 +40,7 @@ func (field *Field) Set(value interface{}) (err error) {
 				}
 				fieldValue = fieldValue.Elem()
 			}
-			
+
 			if reflectValue.Type().ConvertibleTo(fieldValue.Type()) {
 				fieldValue.Set(reflectValue.Convert(fieldValue.Type()))
 			} else if scanner, ok := fieldValue.Addr().Interface().(sql.Scanner); ok {
@@ -52,7 +52,7 @@ func (field *Field) Set(value interface{}) (err error) {
 	} else {
 		field.Field.Set(reflect.Zero(field.Field.Type()))
 	}
-	
+
 	field.IsBlank = isBlank(field.Field)
 	return err
 }

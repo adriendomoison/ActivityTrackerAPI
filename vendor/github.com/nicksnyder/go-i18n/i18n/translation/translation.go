@@ -3,7 +3,7 @@ package translation
 
 import (
 	"fmt"
-	
+
 	"github.com/nicksnyder/go-i18n/i18n/language"
 )
 
@@ -24,15 +24,9 @@ type Translation interface {
 // SortableByID implements sort.Interface for a slice of translations.
 type SortableByID []Translation
 
-func (a SortableByID) Len() int {
-	return len(a)
-}
-func (a SortableByID) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-func (a SortableByID) Less(i, j int) bool {
-	return a[i].ID() < a[j].ID()
-}
+func (a SortableByID) Len() int           { return len(a) }
+func (a SortableByID) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a SortableByID) Less(i, j int) bool { return a[i].ID() < a[j].ID() }
 
 // NewTranslation reflects on data to create a new Translation.
 //
@@ -68,7 +62,7 @@ func NewTranslation(data map[string]interface{}) (Translation, error) {
 	default:
 		return nil, fmt.Errorf(`unsupported type for "translation" key %T`, translation)
 	}
-	
+
 	templates := make(map[language.Plural]*template, len(pluralObject))
 	for k, v := range pluralObject {
 		pc, err := language.NewPlural(k)

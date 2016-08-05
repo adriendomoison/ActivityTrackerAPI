@@ -52,7 +52,7 @@ func updateTimeStampForUpdateCallback(scope *Scope) {
 func updateCallback(scope *Scope) {
 	if !scope.HasError() {
 		var sqls []string
-		
+
 		if updateAttrs, ok := scope.InstanceGet("gorm:update_attrs"); ok {
 			for column, value := range updateAttrs.(map[string]interface{}) {
 				sqls = append(sqls, fmt.Sprintf("%v = %v", scope.Quote(column), scope.AddToVars(value)))
@@ -73,12 +73,12 @@ func updateCallback(scope *Scope) {
 				}
 			}
 		}
-		
+
 		var extraOption string
 		if str, ok := scope.Get("gorm:update_option"); ok {
 			extraOption = fmt.Sprint(str)
 		}
-		
+
 		if len(sqls) > 0 {
 			scope.Raw(fmt.Sprintf(
 				"UPDATE %v SET %v%v%v",

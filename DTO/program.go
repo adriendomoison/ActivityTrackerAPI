@@ -1,19 +1,18 @@
 package DTO
 
 import (
-	"github.com/adriendomoison/ActivityTrackerAPI/DAO"
 	"github.com/adriendomoison/ActivityTrackerAPI/translate"
 	"github.com/adriendomoison/ActivityTrackerAPI/utils"
 )
 
 type Program struct {
-	Id                   int    `json:"id"`
+	Id                   uint   `json:"id"`
 	Name                 string `json:"name"`
 	Description          string `json:"description"`
 	StartDate            string `json:"startDate"`
 	EndDate              string `json:"endDate"`
 	NbrOfHoursToComplete int    `json:"nbrOfHoursToComplete"`
-	EnrolledStudents     []DAO.StudentBasic `json:"enrolledStudent"`
+	EnrolledStudents     []uint `json:"enrolledStudent"`
 }
 
 func (p Program) CheckField() (err string) {

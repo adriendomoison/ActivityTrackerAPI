@@ -25,7 +25,7 @@ func deleteCallback(scope *Scope) {
 		if str, ok := scope.Get("gorm:delete_option"); ok {
 			extraOption = fmt.Sprint(str)
 		}
-		
+
 		if !scope.Search.Unscoped && scope.HasColumn("DeletedAt") {
 			scope.Raw(fmt.Sprintf(
 				"UPDATE %v SET deleted_at=%v%v%v",

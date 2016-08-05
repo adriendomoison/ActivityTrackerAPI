@@ -1,94 +1,85 @@
 {
-  "ImportPath": "github.com/adriendomoison/ActivityTrackerAPI",
-  "GoVersion": "go1.6",
-  "GodepVersion": "v74",
-  "Packages": [
-    "./..."
-  ],
-  "Deps": [
-    {
-      "ImportPath": "github.com/gin-gonic/gin",
-      "Comment": "v1.0rc1-268-gf931d1e",
-      "Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
-    },
-    {
-      "ImportPath": "github.com/gin-gonic/gin/binding",
-      "Comment": "v1.0rc1-268-gf931d1e",
-      "Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
-    },
-    {
-      "ImportPath": "github.com/gin-gonic/gin/render",
-      "Comment": "v1.0rc1-268-gf931d1e",
-      "Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
-    },
-    {
-      "ImportPath": "github.com/go-sql-driver/mysql",
-      "Comment": "v1.2-196-g3654d25",
-      "Rev": "3654d25ec346ee8ce71a68431025458d52a38ac0"
-    },
-    {
-      "ImportPath": "github.com/golang/protobuf/proto",
-      "Rev": "3852dcfda249c2097355a6aabb199a28d97b30df"
-    },
-    {
-      "ImportPath": "github.com/jinzhu/gorm",
-      "Comment": "v1.0-50-ga646b13",
-      "Rev": "a646b13548ec0aa812fe805b2780f460dd2771b6"
-    },
-    {
-      "ImportPath": "github.com/jinzhu/gorm/dialects/sqlite",
-      "Comment": "v1.0-50-ga646b13",
-      "Rev": "a646b13548ec0aa812fe805b2780f460dd2771b6"
-    },
-    {
-      "ImportPath": "github.com/jinzhu/inflection",
-      "Rev": "8f4d3a0d04ce0b7c0cf3126fb98524246d00d102"
-    },
-    {
-      "ImportPath": "github.com/kisielk/sqlstruct",
-      "Rev": "648daed35d49dac24a4bff253b190a80da3ab6a5"
-    },
-    {
-      "ImportPath": "github.com/manucorporat/sse",
-      "Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
-    },
-    {
-      "ImportPath": "github.com/mattn/go-sqlite3",
-      "Comment": "v1.1.0-71-ge118d44",
-      "Rev": "e118d4451349065b8e7ce0f0af32e033995363f8"
-    },
-    {
-      "ImportPath": "github.com/nicksnyder/go-i18n/i18n",
-      "Comment": "v1.4.0",
-      "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
-    },
-    {
-      "ImportPath": "github.com/nicksnyder/go-i18n/i18n/bundle",
-      "Comment": "v1.4.0",
-      "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
-    },
-    {
-      "ImportPath": "github.com/nicksnyder/go-i18n/i18n/language",
-      "Comment": "v1.4.0",
-      "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
-    },
-    {
-      "ImportPath": "github.com/nicksnyder/go-i18n/i18n/translation",
-      "Comment": "v1.4.0",
-      "Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
-    },
-    {
-      "ImportPath": "golang.org/x/net/context",
-      "Rev": "b400c2eff1badec7022a8c8f5bea058b6315eed7"
-    },
-    {
-      "ImportPath": "gopkg.in/go-playground/validator.v8",
-      "Comment": "v8.17.2",
-      "Rev": "25f1823069d853eccffbde025dca1812fa09c14b"
-    },
-    {
-      "ImportPath": "gopkg.in/yaml.v2",
-      "Rev": "a83829b6f1293c91addabc89d0571c246397bbf4"
-    }
-  ]
+	"ImportPath": "github.com/adriendomoison/ActivityTrackerAPI",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0rc1-268-gf931d1e",
+			"Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding",
+			"Comment": "v1.0rc1-268-gf931d1e",
+			"Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/render",
+			"Comment": "v1.0rc1-268-gf931d1e",
+			"Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-196-g3654d25",
+			"Rev": "3654d25ec346ee8ce71a68431025458d52a38ac0"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "3852dcfda249c2097355a6aabb199a28d97b30df"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm",
+			"Comment": "v1.0-50-ga646b13",
+			"Rev": "a646b13548ec0aa812fe805b2780f460dd2771b6"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm/dialects/mysql",
+			"Comment": "v1.0-50-ga646b13",
+			"Rev": "a646b13548ec0aa812fe805b2780f460dd2771b6"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/inflection",
+			"Rev": "8f4d3a0d04ce0b7c0cf3126fb98524246d00d102"
+		},
+		{
+			"ImportPath": "github.com/manucorporat/sse",
+			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n",
+			"Comment": "v1.4.0",
+			"Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n/bundle",
+			"Comment": "v1.4.0",
+			"Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n/language",
+			"Comment": "v1.4.0",
+			"Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n/translation",
+			"Comment": "v1.4.0",
+			"Rev": "37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "b400c2eff1badec7022a8c8f5bea058b6315eed7"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8",
+			"Comment": "v8.17.2",
+			"Rev": "25f1823069d853eccffbde025dca1812fa09c14b"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v2",
+			"Rev": "a83829b6f1293c91addabc89d0571c246397bbf4"
+		}
+	]
 }

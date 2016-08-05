@@ -13,7 +13,7 @@ import (
 
 var (
 	defaultLogger = Logger{log.New(os.Stdout, "\r\n", 0)}
-	sqlRegexp = regexp.MustCompile(`(\$\d+)|\?`)
+	sqlRegexp     = regexp.MustCompile(`(\$\d+)|\?`)
 )
 
 type logger interface {
@@ -37,14 +37,14 @@ func (logger Logger) Print(values ...interface{}) {
 		currentTime := "\n\033[33m[" + NowFunc().Format("2006-01-02 15:04:05") + "]\033[0m"
 		source := fmt.Sprintf("\033[35m(%v)\033[0m", values[1])
 		messages := []interface{}{source, currentTime}
-		
+
 		if level == "sql" {
 			// duration
-			messages = append(messages, fmt.Sprintf(" \033[36;1m[%.2fms]\033[0m ", float64(values[2].(time.Duration).Nanoseconds() / 1e4) / 100.0))
+			messages = append(messages, fmt.Sprintf(" \033[36;1m[%.2fms]\033[0m ", float64(values[2].(time.Duration).Nanoseconds()/1e4)/100.0))
 			// sql
 			var sql string
 			var formattedValues []string
-			
+
 			for _, value := range values[4].([]interface{}) {
 				indirectValue := reflect.Indirect(reflect.ValueOf(value))
 				if indirectValue.IsValid() {
@@ -70,7 +70,7 @@ func (logger Logger) Print(values ...interface{}) {
 					formattedValues = append(formattedValues, fmt.Sprintf("'%v'", value))
 				}
 			}
-			
+
 			var formattedValuesLength = len(formattedValues)
 			for index, value := range sqlRegexp.Split(values[3].(string), -1) {
 				sql += value
@@ -78,7 +78,7 @@ func (logger Logger) Print(values ...interface{}) {
 					sql += formattedValues[index]
 				}
 			}
-			
+
 			messages = append(messages, sql)
 		} else {
 			messages = append(messages, "\033[31;1m")

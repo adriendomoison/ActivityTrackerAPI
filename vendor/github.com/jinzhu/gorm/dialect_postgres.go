@@ -25,7 +25,7 @@ func (postgres) BindVar(i int) string {
 
 func (postgres) DataTypeOf(field *StructField) string {
 	var dataValue, sqlType, size, additionalType = ParseFieldStructForDialect(field)
-	
+
 	if sqlType == "" {
 		switch dataValue.Kind() {
 		case reflect.Bool:
@@ -50,7 +50,7 @@ func (postgres) DataTypeOf(field *StructField) string {
 			if _, ok := field.TagSettings["SIZE"]; !ok {
 				size = 0 // if SIZE haven't been set, use `text` as the default type, as there are no performance different
 			}
-			
+
 			if size > 0 && size < 65532 {
 				sqlType = fmt.Sprintf("varchar(%d)", size)
 			} else {
@@ -72,11 +72,11 @@ func (postgres) DataTypeOf(field *StructField) string {
 			}
 		}
 	}
-	
+
 	if sqlType == "" {
 		panic(fmt.Sprintf("invalid sql type %s (%s) for postgres", dataValue.Type().Name(), dataValue.Kind().String()))
 	}
-	
+
 	if strings.TrimSpace(additionalType) == "" {
 		return sqlType
 	}

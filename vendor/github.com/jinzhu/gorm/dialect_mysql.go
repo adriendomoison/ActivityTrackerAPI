@@ -29,7 +29,7 @@ func (mysql) Quote(key string) string {
 // Get Data Type for MySQL Dialect
 func (mysql) DataTypeOf(field *StructField) string {
 	var dataValue, sqlType, size, additionalType = ParseFieldStructForDialect(field)
-	
+
 	// MySQL allows only one auto increment column per table, and it must
 	// be a KEY column.
 	if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok {
@@ -37,7 +37,7 @@ func (mysql) DataTypeOf(field *StructField) string {
 			delete(field.TagSettings, "AUTO_INCREMENT")
 		}
 	}
-	
+
 	if sqlType == "" {
 		switch dataValue.Kind() {
 		case reflect.Bool:
@@ -96,11 +96,11 @@ func (mysql) DataTypeOf(field *StructField) string {
 			}
 		}
 	}
-	
+
 	if sqlType == "" {
 		panic(fmt.Sprintf("invalid sql type %s (%s) for mysql", dataValue.Type().Name(), dataValue.Kind().String()))
 	}
-	
+
 	if strings.TrimSpace(additionalType) == "" {
 		return sqlType
 	}
@@ -135,12 +135,12 @@ func (s mysql) BuildForeignKeyName(tableName, field, dest string) string {
 	h := sha1.New()
 	h.Write([]byte(keyName))
 	bs := h.Sum(nil)
-	
+
 	// sha1 is 40 digits, keep first 24 characters of destination
 	destRunes := []rune(regexp.MustCompile("(_*[^a-zA-Z]+_*|_+)").ReplaceAllString(dest, "_"))
 	if len(destRunes) > 24 {
 		destRunes = destRunes[:24]
 	}
-	
+
 	return fmt.Sprintf("%s%x", string(destRunes), bs)
 }

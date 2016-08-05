@@ -41,7 +41,7 @@ func (commonDialect) Quote(key string) string {
 
 func (commonDialect) DataTypeOf(field *StructField) string {
 	var dataValue, sqlType, size, additionalType = ParseFieldStructForDialect(field)
-	
+
 	if sqlType == "" {
 		switch dataValue.Kind() {
 		case reflect.Bool:
@@ -80,11 +80,11 @@ func (commonDialect) DataTypeOf(field *StructField) string {
 			}
 		}
 	}
-	
+
 	if sqlType == "" {
 		panic(fmt.Sprintf("invalid sql type %s (%s) for commonDialect", dataValue.Type().Name(), dataValue.Kind().String()))
 	}
-	
+
 	if strings.TrimSpace(additionalType) == "" {
 		return sqlType
 	}

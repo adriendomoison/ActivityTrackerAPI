@@ -69,25 +69,25 @@ func ToDBName(name string) string {
 	if v := smap.Get(name); v != "" {
 		return v
 	}
-	
+
 	if name == "" {
 		return ""
 	}
-	
+
 	var (
-		value = commonInitialismsReplacer.Replace(name)
-		buf = bytes.NewBufferString("")
+		value                        = commonInitialismsReplacer.Replace(name)
+		buf                          = bytes.NewBufferString("")
 		lastCase, currCase, nextCase strCase
 	)
-	
-	for i, v := range value[:len(value) - 1] {
-		nextCase = strCase(value[i + 1] >= 'A' && value[i + 1] <= 'Z')
+
+	for i, v := range value[:len(value)-1] {
+		nextCase = strCase(value[i+1] >= 'A' && value[i+1] <= 'Z')
 		if i > 0 {
 			if currCase == upper {
 				if lastCase == upper && nextCase == upper {
 					buf.WriteRune(v)
 				} else {
-					if value[i - 1] != '_' && value[i + 1] != '_' {
+					if value[i-1] != '_' && value[i+1] != '_' {
 						buf.WriteRune('_')
 					}
 					buf.WriteRune(v)
@@ -102,9 +102,9 @@ func ToDBName(name string) string {
 		lastCase = currCase
 		currCase = nextCase
 	}
-	
-	buf.WriteByte(value[len(value) - 1])
-	
+
+	buf.WriteByte(value[len(value)-1])
+
 	s := strings.ToLower(buf.String())
 	smap.Set(name, s)
 	return s
@@ -131,13 +131,13 @@ func indirect(reflectValue reflect.Value) reflect.Value {
 
 func toQueryMarks(primaryValues [][]interface{}) string {
 	var results []string
-	
+
 	for _, primaryValue := range primaryValues {
 		var marks []string
-		for range primaryValue {
+		for _,_ = range primaryValue {
 			marks = append(marks, "?")
 		}
-		
+
 		if len(marks) > 1 {
 			results = append(results, fmt.Sprintf("(%v)", strings.Join(marks, ",")))
 		} else {
@@ -152,7 +152,7 @@ func toQueryCondition(scope *Scope, columns []string) string {
 	for _, column := range columns {
 		newColumns = append(newColumns, scope.Quote(column))
 	}
-	
+
 	if len(columns) > 1 {
 		return fmt.Sprintf("(%v)", strings.Join(newColumns, ","))
 	}
@@ -191,7 +191,7 @@ func toSearchableMap(attrs ...interface{}) (result interface{}) {
 		if attr, ok := attrs[0].(map[string]interface{}); ok {
 			result = attr
 		}
-		
+
 		if attr, ok := attrs[0].(interface{}); ok {
 			result = attr
 		}

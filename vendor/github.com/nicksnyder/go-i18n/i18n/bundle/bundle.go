@@ -7,9 +7,9 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"reflect"
-	
+
 	"path/filepath"
-	
+
 	"github.com/nicksnyder/go-i18n/i18n/language"
 	"github.com/nicksnyder/go-i18n/i18n/translation"
 )
@@ -20,8 +20,8 @@ type TranslateFunc func(translationID string, args ...interface{}) string
 // Bundle stores the translations for multiple languages.
 type Bundle struct {
 	// The primary translations for a language tag and translation id.
-	translations         map[string]map[string]translation.Translation
-	
+	translations map[string]map[string]translation.Translation
+
 	// Translations that can be used when an exact language match is not possible.
 	fallbackTranslations map[string]map[string]translation.Translation
 }
@@ -85,14 +85,14 @@ func parseTranslations(filename string, buf []byte) ([]translation.Translation, 
 	default:
 		return nil, fmt.Errorf("unsupported file extension %s", format)
 	}
-	
+
 	var translationsData []map[string]interface{}
 	if len(buf) > 0 {
 		if err := unmarshalFunc(buf, &translationsData); err != nil {
 			return nil, err
 		}
 	}
-	
+
 	translations := make([]translation.Translation, 0, len(translationsData))
 	for i, translationData := range translationsData {
 		t, err := translation.NewTranslation(translationData)
@@ -119,7 +119,7 @@ func (b *Bundle) AddTranslation(lang *language.Language, translations ...transla
 			currentTranslations[newTranslation.ID()] = newTranslation
 		}
 	}
-	
+
 	// lang can provide translations for less specific language tags.
 	for _, tag := range lang.MatchingTags() {
 		b.fallbackTranslations[tag] = currentTranslations
@@ -225,7 +225,7 @@ func (b *Bundle) translate(lang *language.Language, translationID string, args .
 	if lang == nil {
 		return translationID
 	}
-	
+
 	translations := b.translations[lang.Tag]
 	if translations == nil {
 		translations = b.fallbackTranslations[lang.Tag]
@@ -233,12 +233,12 @@ func (b *Bundle) translate(lang *language.Language, translationID string, args .
 			return translationID
 		}
 	}
-	
+
 	translation := translations[translationID]
 	if translation == nil {
 		return translationID
 	}
-	
+
 	var data interface{}
 	var count interface{}
 	if argc := len(args); argc > 0 {
@@ -251,7 +251,7 @@ func (b *Bundle) translate(lang *language.Language, translationID string, args .
 			data = args[0]
 		}
 	}
-	
+
 	if count != nil {
 		if data == nil {
 			data = map[string]interface{}{"Count": count}
@@ -261,13 +261,13 @@ func (b *Bundle) translate(lang *language.Language, translationID string, args .
 			data = dataMap
 		}
 	}
-	
+
 	p, _ := lang.Plural(count)
 	template := translation.Template(p)
 	if template == nil {
 		return translationID
 	}
-	
+
 	s := template.Execute(data)
 	if s == "" {
 		return translationID

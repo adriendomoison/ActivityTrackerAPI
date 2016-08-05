@@ -1,11 +1,10 @@
 package repository
 
 import (
-	"github.com/adriendomoison/ActivityTrackerAPI/DAO"
-	"github.com/adriendomoison/ActivityTrackerAPI/translate"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"log"
+	"github.com/adriendomoison/ActivityTrackerAPI/DAO"
 	"github.com/adriendomoison/ActivityTrackerAPI/utils"
+	"github.com/adriendomoison/ActivityTrackerAPI/translate"
 )
 
 func CreateProgram(p DAO.Program) utils.ReturnMsg {
@@ -17,43 +16,10 @@ func CreateProgram(p DAO.Program) utils.ReturnMsg {
 }
 
 func RetrieveAllPrograms() (programs []DAO.Program, rMsg utils.ReturnMsg) {
-	
-	//var programs = make(map[string]DAO.Program)
-	//// TODO: patch the request so it do a concatenation and get programs even when nobody subscribed to it.
-	//sql := "SELECT %s, %s FROM program AS p " +
-	//	"INNER JOIN program_subscription AS ps ON p.idprogram = ps.fk_program " +
-	//	"INNER JOIN user AS s ON s.iduser = ps.fk_user"
-	//sql = fmt.Sprintf(sql, sqlstruct.ColumnsAliased(DAO.Program{}, "p"), sqlstruct.ColumnsAliased(DAO.StudentBasic{}, "s"))
-	//rows, err := db.Query(sql)
-	//if err != nil {
-	//	log.Println(err)
-	//	return programs, DTO.ReturnMsg{-1, err.Error()}
-	//}
-	//defer rows.Close()
-	//i := 0
-	//for ; rows.Next(); i++ {
-	//
-	//	var program DAO.Program
-	//	var student DAO.StudentBasic
-	//
-	//	err = sqlstruct.ScanAliased(&program, rows, "p")
-	//	if err != nil {
-	//		log.Println(err)
-	//		return programs, DTO.ReturnMsg{-1, err.Error()}
-	//	}
-	//	err = sqlstruct.ScanAliased(&student, rows, "s")
-	//	if err != nil {
-	//		log.Println(err)
-	//		return programs, DTO.ReturnMsg{-1, err.Error()}
-	//	}
-	//	if _, ok := programs[program.Name]; !ok {
-	//		programs[program.Name] = program
-	//	}
-	//	appendStudentToProgram(programs, program.Name, student)
-	//}
-	//if i == 0 {
-	//	return programs, DTO.ReturnMsg{1, translate.T("noProgram")}
-	//}
+	db.Find(&programs)
+	for i :=0; i < len(programs); i++ {
+		db.Where(DAO.ProgramsSubscription{FkProgram: programs[i].ID}).Find(&programs[i].Users)
+	}
 	return programs, utils.ReturnMsg{0, ""}
 }
 

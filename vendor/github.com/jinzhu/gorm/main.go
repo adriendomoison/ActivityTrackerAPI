@@ -41,13 +41,13 @@ type DB struct {
 func Open(dialect string, args ...interface{}) (*DB, error) {
 	var db DB
 	var err error
-	
+
 	if len(args) == 0 {
 		err = errors.New("invalid database source")
 	} else {
 		var source string
 		var dbSQL sqlCommon
-		
+
 		switch value := args[0].(type) {
 		case string:
 			var driver = dialect
@@ -62,7 +62,7 @@ func Open(dialect string, args ...interface{}) (*DB, error) {
 			source = reflect.Indirect(reflect.ValueOf(value)).FieldByName("dsn").String()
 			dbSQL = value
 		}
-		
+
 		db = DB{
 			dialect:   newDialect(dialect, dbSQL.(*sql.DB)),
 			logger:    defaultLogger,
@@ -72,12 +72,12 @@ func Open(dialect string, args ...interface{}) (*DB, error) {
 			db:        dbSQL,
 		}
 		db.parent = &db
-		
+
 		if err == nil {
 			err = db.DB().Ping() // Send a ping to make sure the database connection is alive.
 		}
 	}
-	
+
 	return &db, err
 }
 
@@ -274,15 +274,15 @@ func (s *DB) Rows() (*sql.Rows, error) {
 // ScanRows scan `*sql.Rows` to give struct
 func (s *DB) ScanRows(rows *sql.Rows, result interface{}) error {
 	var (
-		clone = s.clone()
-		scope = clone.NewScope(result)
+		clone        = s.clone()
+		scope        = clone.NewScope(result)
 		columns, err = rows.Columns()
 	)
-	
+
 	if clone.AddError(err) == nil {
 		scope.scan(rows, columns, scope.Fields())
 	}
-	
+
 	return clone.Error
 }
 
@@ -483,7 +483,7 @@ func (s *DB) DropTable(values ...interface{}) *DB {
 		if tableName, ok := value.(string); ok {
 			db = db.Table(tableName)
 		}
-		
+
 		db = db.NewScope(value).dropTable().db
 	}
 	return db
@@ -503,16 +503,16 @@ func (s *DB) DropTableIfExists(values ...interface{}) *DB {
 // HasTable check has table or not
 func (s *DB) HasTable(value interface{}) bool {
 	var (
-		scope = s.clone().NewScope(value)
+		scope     = s.clone().NewScope(value)
 		tableName string
 	)
-	
+
 	if name, ok := value.(string); ok {
 		tableName = name
 	} else {
 		tableName = scope.TableName()
 	}
-	
+
 	has := scope.Dialect().HasTable(tableName)
 	s.AddError(scope.db.Error)
 	return has
@@ -574,7 +574,7 @@ func (s *DB) AddForeignKey(field string, dest string, onDelete string, onUpdate 
 func (s *DB) Association(column string) *Association {
 	var err error
 	scope := s.clone().NewScope(s.Value)
-	
+
 	if primaryField := scope.PrimaryField(); primaryField.IsBlank {
 		err = errors.New("primary key can't be nil")
 	} else {
@@ -588,7 +588,7 @@ func (s *DB) Association(column string) *Association {
 			err = fmt.Errorf("%v doesn't have column %v", scope.IndirectValue().Type(), column)
 		}
 	}
-	
+
 	return &Association{Error: err}
 }
 
@@ -642,14 +642,14 @@ func (s *DB) AddError(err error) error {
 			} else {
 				s.log(err)
 			}
-			
+
 			errors := Errors{errors: s.GetErrors()}
 			errors.Add(err)
 			if len(errors.GetErrors()) > 1 {
 				err = errors
 			}
 		}
-		
+
 		s.Error = err
 	}
 	return err
@@ -671,17 +671,17 @@ func (s *DB) GetErrors() (errors []error) {
 
 func (s *DB) clone() *DB {
 	db := DB{db: s.db, parent: s.parent, logger: s.logger, logMode: s.logMode, values: map[string]interface{}{}, Value: s.Value, Error: s.Error}
-	
+
 	for key, value := range s.values {
 		db.values[key] = value
 	}
-	
+
 	if s.search == nil {
 		db.search = &search{limit: -1, offset: -1}
 	} else {
 		db.search = s.search.clone()
 	}
-	
+
 	db.search.db = &db
 	return &db
 }

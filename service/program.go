@@ -18,21 +18,27 @@ func CreateProgram(p *DTO.Program) utils.ReturnMsg {
 		})
 }
 
+func transformToArrayOfId(users []DAO.ProgramsSubscription) (userArray []uint) {
+	for i := 0; i < len(users); i++ {
+		userArray = append(userArray, users[i].FkUser)
+	}
+	return
+}
+
 func RetrieveAllPrograms() (programs []DTO.Program, rMsg utils.ReturnMsg) {
-	//var programsData map[string]DAO.Program
-	//var keys []string
-	//
-	//programsData, rMsg = repository.RetrieveAllPrograms()
-	//for k := range programsData {
-	//	keys = append(keys, k)
-	//}
-	//sort.Strings(keys)
-	//for _, k := range keys {
-	//	startDate, endDate := findDate(programsData[k])
-	//	programs = append(programs, DTO.Program{programsData[k].Id, programsData[k].Name, programsData[k].Description,
-	//		time.Time(startDate).Format("2006-01-02"), time.Time(endDate).Format("2006-01-02"),
-	//		programsData[k].Nbr_hours_to_complete})
-	//}
+	p, rMsg := repository.RetrieveAllPrograms()
+	
+	for i := 0; i < len(p); i++ {
+		programs = append(programs, DTO.Program{
+			p[i].ID,
+			p[i].Name,
+			p[i].Description,
+			p[i].StartDate,
+			p[i].EndDate,
+			p[i].NbrHoursToComplete,
+			transformToArrayOfId(p[i].Users),
+		})
+	}
 	return
 }
 

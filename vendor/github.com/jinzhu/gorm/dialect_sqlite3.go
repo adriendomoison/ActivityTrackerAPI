@@ -23,7 +23,7 @@ func (sqlite3) GetName() string {
 // Get Data Type for Sqlite Dialect
 func (sqlite3) DataTypeOf(field *StructField) string {
 	var dataValue, sqlType, size, additionalType = ParseFieldStructForDialect(field)
-	
+
 	if sqlType == "" {
 		switch dataValue.Kind() {
 		case reflect.Bool:
@@ -60,11 +60,11 @@ func (sqlite3) DataTypeOf(field *StructField) string {
 			}
 		}
 	}
-	
+
 	if sqlType == "" {
 		panic(fmt.Sprintf("invalid sql type %s (%s) for sqlite3", dataValue.Type().Name(), dataValue.Kind().String()))
 	}
-	
+
 	if strings.TrimSpace(additionalType) == "" {
 		return sqlType
 	}
@@ -91,9 +91,9 @@ func (s sqlite3) HasColumn(tableName string, columnName string) bool {
 
 func (s sqlite3) CurrentDatabase() (name string) {
 	var (
-		ifaces = make([]interface{}, 3)
+		ifaces   = make([]interface{}, 3)
 		pointers = make([]*string, 3)
-		i int
+		i        int
 	)
 	for i = 0; i < 3; i++ {
 		ifaces[i] = &pointers[i]
