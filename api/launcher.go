@@ -32,12 +32,16 @@ func InitApi() {
 	app.Run(":" + port)
 }
 
+func informationLoad() {
+}
+
 func initRouts() {
+	informationLoad()
 	app.POST("/api/users", notImplemented)
 	app.DELETE("/api/users/:userId", notImplemented)
 	app.POST("/api/users/:userId/messages", notImplemented)
 	app.POST("/api/events", createEvent)
-	app.GET("/api/events/:eventId", notImplemented)
+	app.GET("/api/events/:eventId", retrieveEvent)
 	app.PUT("/api/events/:eventId", notImplemented)
 	app.DELETE("/api/events/:eventId", notImplemented)
 	app.POST("/api/events/:eventId/subscribe", notImplemented)
@@ -47,7 +51,7 @@ func initRouts() {
 	app.GET("/api/programs/:programId", retrieveProgram)
 	app.DELETE("/api/programs/:programId", deleteProgram)
 	app.GET("/api/programs/:programId/info", notImplemented)
-	app.GET("/api/programs/:programId/events", notImplemented)
+	app.GET("/api/programs/:programId/events", retrieveProgramsEvent)
 	app.GET("/api/programs/:programId/enrolled-students", notImplemented)
 	app.GET("/api/programs/:programId/enrolled-students/:enrolled-studentsId/status", notImplemented)
 	app.GET("/api/justifications", notImplemented)
@@ -77,12 +81,27 @@ func createEvent(c *gin.Context) {
 	if err := c.BindJSON(event); err != nil {
 		log.Println(err.Error())
 	}
-	log.Println(event)
-	c.JSON(http.StatusOK, event)
+	if err := event.CheckFields(); err != "" {
+		c.JSON(http.StatusBadRequest, DTO.UserMsg{Information: translate.T("eventCreationUsage"), Error: err})
+	} else {
+		c.JSON(defineUserMessage(service.CreateEvent(event)))
+	}
 }
 
 func retrieveEvent(c *gin.Context) {
-	
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	id, err := strconv.Atoi(c.Params.ByName("eventId"))
+	if err != nil {
+		log.Println(err)
+	}
+	event, rMsg := service.RetrieveEvent(id)
+	if rMsg.Status == 0 {
+		c.JSON(http.StatusOK, event)
+	} else if rMsg.Status == 1 {
+		c.JSON(http.StatusBadRequest, DTO.UserMsg{Error:rMsg.Msg})
+	} else if rMsg.Status == -1 {
+		c.JSON(http.StatusInternalServerError, DTO.UserMsg{Error:rMsg.Msg})
+	}
 }
 
 func updateEvent(c *gin.Context) {
@@ -155,8 +174,18 @@ func retrieveProgramInfo(c *gin.Context) {
 	
 }
 
-func retriveProgramsEvent(c *gin.Context) {
-	
+func retrieveProgramsEvent(c *gin.Context) {
+	id, err := strconv.Atoi(c.Params.ByName("programId"))
+	if err != nil {
+		log.Println(err)
+	}
+	if events, rMsg := service.RetrieveAllEvent(id); rMsg.Status == 0 {
+		c.JSON(http.StatusOK, events)
+	} else if rMsg.Status == 1 {
+		c.JSON(http.StatusBadRequest, DTO.UserMsg{Error:rMsg.Msg})
+	} else if rMsg.Status == -1 {
+		c.JSON(http.StatusInternalServerError, DTO.UserMsg{Error:rMsg.Msg})
+	}
 }
 
 func retrieveEnrolledStudents(c *gin.Context) {

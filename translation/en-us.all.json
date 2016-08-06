@@ -1,23 +1,23 @@
 [
   {
     "id": "errorDatabase",
-    "translation": "Error while contacting the database"
+    "translation": "Error while contacting the database."
   },
   {
     "id": "errorLanguage",
-    "translation": "Error while loading language package"
+    "translation": "Error while loading language package."
   },
   {
     "id": "fieldDescriptionMissing",
-    "translation": "The field 'Description' is missing"
+    "translation": "The field 'Description' is missing."
   },
   {
     "id": "fieldEndDateMissing",
-    "translation": "The field 'End Date' is missing"
+    "translation": "The field 'End Date' is missing."
   },
   {
     "id": "fieldNameMissing",
-    "translation": "The field 'name' is missing"
+    "translation": "The field 'name' is missing."
   },
   {
     "id": "fieldNbrOfHoursToCompleteMissing",
@@ -25,11 +25,11 @@
   },
   {
     "id": "fieldStartDateMissing",
-    "translation": "The field 'Start Date' is missing"
+    "translation": "The field 'Start Date' is missing."
   },
   {
     "id": "greetingNewLanguage",
-    "translation": "Hello World. The language has been set to english"
+    "translation": "Hello World. The language has been set to english."
   },
   {
     "id": "name",
@@ -37,7 +37,7 @@
   },
   {
     "id": "noEntryCreated",
-    "translation": "[CRITICAL] No entry created, please contact the support"
+    "translation": "[CRITICAL] No entry created, please contact the support."
   },
   {
     "id": "noProgram",
@@ -45,7 +45,7 @@
   },
   {
     "id": "noProgramFor",
-    "translation": "No program for {{.Field}} {{.Value}}"
+    "translation": "No program for {{.Field}} {{.Value}}."
   },
   {
     "id": "noStudent",
@@ -53,11 +53,11 @@
   },
   {
     "id": "programAlreadyExist",
-    "translation": "This program already exist, please use a different name"
+    "translation": "This program already exist, please use a different name."
   },
   {
     "id": "programCreated",
-    "translation": "Program successfully created"
+    "translation": "Program successfully created."
   },
   {
     "id": "programCreationUsage",
@@ -70,5 +70,53 @@
   {
     "id": "sqlErDupEntry",
     "translation": "'{{.Value}}' already exist, please find a different {{.Field}}."
+  },
+  {
+    "id": "eventAlreadyExist",
+    "translation": "This event already exist."
+  },
+  {
+    "id": "eventCreated",
+    "translation": "Event successfully created."
+  },
+  {
+    "id": "eventCreationUsage",
+    "translation": "{name: string, startDate: string, endDate: string, address: string, credit: double, constraints: [], details: string, maxParticipants: int, status: string, type: string, group: string, attachedProgram: programId}"
+  },
+  {
+    "id": "eventFieldNameMissing",
+    "translation": "The name of the event is missing."
+  },
+  {
+    "id": "eventFieldStartDateMissing",
+    "translation": "The date of the event beginning is missing."
+  },
+  {
+    "id": "eventFieldEndDateMissing",
+    "translation": "The date of the event end is missing."
+  },
+  {
+    "id": "eventFieldAddressMissing",
+    "translation": "The address of the event is missing."
+  },
+  {
+    "id": "eventFieldAttachedProgramMissing",
+    "translation": "The event need to be attached to a program."
+  },
+  {
+    "id": "eventTypeUnknown",
+    "translation": "This type of event doesn't exist."
+  },
+  {
+    "id": "eventNotFound",
+    "translation": "This event doesn't exist."
+  },
+  {
+    "id": "eventNoResult",
+    "translation": "There are no event created for this program yet."
+  },
+  {
+    "id": "eventStatusUnknwon",
+    "translation": "This event's status doesn't exist."
   }
 ]

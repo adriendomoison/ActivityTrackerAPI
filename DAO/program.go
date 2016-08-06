@@ -5,7 +5,7 @@ import (
 )
 
 type Program struct {
-	ID                 uint `gorm:"column:idprogram"`
+	ID                 uint `gorm:"column:idprogram;primary_key"`
 	Name               string `gorm:"column:name"`
 	Description        string `gorm:"column:description"`
 	StartDate          time.Time `gorm:"column:start_date"`
@@ -19,4 +19,11 @@ type ProgramsSubscription struct {
 	FkUser    uint `gorm:"column:fk_user"`
 	FkProgram uint `gorm:"column:fk_program"`
 	FkStatus  string `gorm:"column:fk_status"`
+}
+
+func (p Program) GetUsersIdOnly() (ids []uint) {
+	for i := 0; i < len(p.Users); i++ {
+		ids = append(ids, p.Users[i].FkUser)
+	}
+	return
 }
