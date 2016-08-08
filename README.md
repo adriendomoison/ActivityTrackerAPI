@@ -1,7 +1,13 @@
 # ActivityTrackerAPI
 CSUSM Activity Tracker API
 
-Open a terminal:
+Install Go
+```
+$ sudo add-apt-repository ppa:ubuntu-lxc/lxd-stable
+$ sudo apt-get update
+$ sudo apt-get install golang
+```
+
 Set $GOPATH in your $HOME/.bashrc
 ```
 export PATH=${PATH}:/usr/local/go/bin
@@ -11,4 +17,6 @@ export PATH=$GOPATH:$GOBIN:$PATH
 ```
 
 Install dependencies
-`$> godep restore`
+`$ godep restore`
+
+documentation: https://docs.google.com/document/d/1XWebh2Yba7p5x-PzjQ9Q718E6VY--y_VTITsJubt79Q/edit?usp=sharing
