@@ -23,6 +23,13 @@ type Type struct {
 	Name string
 }
 
+type EventSubscription struct {
+	ID       uint   `gorm:"column:idevent_subscription"`
+	FkUser   uint   `gorm:"column:fk_user"`
+	FkEvent  uint   `gorm:"column:fk_event"`
+	FkStatus string `gorm:"column:fk_status"`
+}
+
 //func (e Event) CheckType(types []string) bool {
 //	for i := 0; i < len(types); i++ {
 //		if e.Type == types[i] {

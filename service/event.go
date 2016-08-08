@@ -64,3 +64,18 @@ func RetrieveAllEvent(id int) (events []DTO.Event, rMsg utils.ReturnMsg) {
 	}
 	return
 }
+
+func UnsubscribeEvent(id uint) (utils.ReturnMsg) {
+	return repository.UnsubscribeEvent(DAO.EventSubscription{
+		FkUser:GetCurrentUser(),
+		FkEvent:id,
+	})
+}
+
+func SubscribeEvent(id uint) (utils.ReturnMsg) {
+	return repository.SubscribeEvent(DAO.EventSubscription{
+		FkUser:GetCurrentUser(),
+		FkEvent:id,
+		FkStatus:"SUBSCRIBED",
+	})
+}

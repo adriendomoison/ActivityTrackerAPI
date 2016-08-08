@@ -116,7 +116,19 @@
     "translation": "There are no event created for this program yet."
   },
   {
-    "id": "eventStatusUnknwon",
+    "id": "eventStatusUnknown",
     "translation": "This event's status doesn't exist."
+  },
+  {
+    "id": "eventUnsubscribed",
+    "translation": "You unsubscribed this event"
+  },
+  {
+    "id": "eventSubscribed",
+    "translation": "You subscribed to this event."
+  },
+  {
+    "id": "eventUnknownErrorSubscribing",
+    "translation": "Unknown error while subscribing."
   }
 ]

@@ -34,6 +34,20 @@ func RetrieveAllEvent(id int) (events []DAO.Event, rMsg utils.ReturnMsg) {
 	}
 	return events, utils.ReturnMsg{1, translate.T("eventNoResult")}
 }
+
+func UnsubscribeEvent(es DAO.EventSubscription) (utils.ReturnMsg) {
+	db.Model(&es).Update("fk_status", "UNSUBSCRIBED")
+	return utils.ReturnMsg{0, translate.T("eventUnsubscribed")}
+}
+
+func SubscribeEvent(es DAO.EventSubscription) (utils.ReturnMsg) {
+	if err := db.Create(&es).Error; err != nil {
+		log.Println(err)
+		return utils.ReturnMsg{-1, translate.T("eventUnknownErrorSubscribing")}
+	}
+	return utils.ReturnMsg{0, translate.T("eventSubscribed")}
+}
+
 // TODO implement types and groups
 //func RetrieveEventTypes() (types []DAO.Type) {
 //	db.Find(&types)

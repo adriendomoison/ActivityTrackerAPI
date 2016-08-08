@@ -44,8 +44,8 @@ func initRouts() {
 	app.GET("/api/events/:eventId", retrieveEvent)
 	app.PUT("/api/events/:eventId", notImplemented)
 	app.DELETE("/api/events/:eventId", notImplemented)
-	app.POST("/api/events/:eventId/subscribe", notImplemented)
-	app.DELETE("/api/events/:eventId/subscribe", notImplemented)
+	app.POST("/api/events/:eventId/subscribe", subscribeEvent)
+	app.DELETE("/api/events/:eventId/subscribe", unsubscribeEvent)
 	app.POST("/api/programs", createProgram)
 	app.GET("/api/programs", retrieveAllPrograms)
 	app.GET("/api/programs/:programId", retrieveProgram)
@@ -113,11 +113,21 @@ func deleteEvent(c *gin.Context) {
 }
 
 func subscribeEvent(c *gin.Context) {
-	
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	id, err := strconv.Atoi(c.Params.ByName("eventId"))
+	if err != nil {
+		log.Println(err)
+	}
+	c.JSON(defineUserMessage(service.SubscribeEvent(uint(id))))
 }
 
 func unsubscribeEvent(c *gin.Context) {
-	
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	id, err := strconv.Atoi(c.Params.ByName("eventId"))
+	if err != nil {
+		log.Println(err)
+	}
+	c.JSON(defineUserMessage(service.UnsubscribeEvent(uint(id))))
 }
 
 func createProgram(c *gin.Context) {
@@ -161,13 +171,7 @@ func deleteProgram(c *gin.Context) {
 	if err != nil {
 		log.Println(err)
 	}
-	if rMsg := service.DeleteProgram(id); rMsg.Status == 0 {
-		c.JSON(http.StatusOK, DTO.UserMsg{Information:rMsg.Msg})
-	} else if rMsg.Status == 1 {
-		c.JSON(http.StatusBadRequest, DTO.UserMsg{Error:rMsg.Msg})
-	} else if rMsg.Status == -1 {
-		c.JSON(http.StatusInternalServerError, DTO.UserMsg{Error:rMsg.Msg})
-	}
+	c.JSON(defineUserMessage(service.DeleteProgram(id)))
 }
 
 func retrieveProgramInfo(c *gin.Context) {
